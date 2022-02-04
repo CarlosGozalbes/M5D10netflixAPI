@@ -195,7 +195,7 @@ mediaRouter.post(
       const mediaArray = await getMedia();
 
       const index = mediaArray.findIndex(
-        (media) => mediaimdbID === req.params.mediaimdbID
+        (media) => media.imdbID === req.params.mediaimdbID
       );
       if (!index == -1) {
         res.status(404).send({
