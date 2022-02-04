@@ -59,6 +59,6 @@ server.listen(port, () => {
 });
 
 
-server.on('error', ()=>{
+server.on('error', (error)=>{
     console.log(error)
 })
