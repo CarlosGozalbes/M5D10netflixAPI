@@ -8,7 +8,7 @@ import {
   notFoundHandler,
   genericErrorHandler,
 } from "./errorHandlers.js";
-import createHttpError from "http-errors";
+
 import cors from "cors";
 
 import { join } from "path";
@@ -20,7 +20,7 @@ const port = process.env.PORT || 3001;
 const publicFolderPath = join(process.cwd(), "./public");
 
 //cors
-const whiteListedOrigins = [process.env.FE_DEV_URL]; // , process.env.FE_PROD_URL
+const whiteListedOrigins = [process.env.FE_DEV_URL, process.env.FE_PROD_URL]; 
 console.log("Permitted origins:");
 console.table(whiteListedOrigins);
 
