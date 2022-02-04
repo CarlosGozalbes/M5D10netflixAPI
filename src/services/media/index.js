@@ -60,8 +60,12 @@ mediaRouter.get("/", async (req, res, next) => {
             (media) => media.Title === req.query.Title
         )
         res.send(filteredMedia)
-    } else {
-    res.send(mediaArray);
+    } else { 
+        axios.get(`http://www.omdbapi.com/?s=${req.query.Title}&apikey=bf46dbfc`).then(OMDbMedia => res.data.Search).catch(err=> console.log(err))
+        mediaArray.push(OMDbMedia);
+        await writeMedia(mediaArray)
+
+    res.send(OMDbMedia);
     }
   } catch (error) {
     next(error); // With the next function I can send the error to the error handler middleware
