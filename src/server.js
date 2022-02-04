@@ -43,7 +43,7 @@ server.use(express.json());
 
 //ENDPOINTS
 
-server.use("/media", authorsRouter);
+server.use("/media", mediaRouter);
 
 //
 

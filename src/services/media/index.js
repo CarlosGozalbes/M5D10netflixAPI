@@ -1,5 +1,5 @@
 import express from "express";
-
+import axios from "axios";
 import uniqid from "uniqid";
 import createHttpError from "http-errors";
 import { validationResult } from "express-validator";
@@ -55,8 +55,14 @@ mediaRouter.post("/", newMediaValidation, async (req, res, next) => {
 mediaRouter.get("/", async (req, res, next) => {
   try {
     const mediaArray = await getMedia();
-
+    if (req.query && req.query.Title) {
+        const filteredMedia = mediaArray.filter(
+            (media) => media.Title === req.query.Title
+        )
+        res.send(filteredMedia)
+    } else {
     res.send(mediaArray);
+    }
   } catch (error) {
     next(error); // With the next function I can send the error to the error handler middleware
   }
@@ -178,7 +184,7 @@ mediaRouter.post(
     try {
       const mediaimdbID = req.params.mediaimdbID;
       const { comment, rate } = req.body;
-      const comment = {
+      const review = {
         id: uniqid(),
         comment,
         rate,
