@@ -187,12 +187,13 @@ mediaRouter.post(
   async (req, res, next) => {
     try {
       const mediaimdbID = req.params.mediaimdbID;
+      
       const { comment, rate } = req.body;
       const review = {
         id: uniqid(),
         comment,
         rate,
-        elementId: media.imdbID,
+        elementId: mediaimdbID,
         createdAt: new Date(),
       };
 
