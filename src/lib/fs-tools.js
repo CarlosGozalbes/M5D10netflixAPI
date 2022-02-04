@@ -1,4 +1,4 @@
-import fs from "fs-extra"; // 3rd party module
+import fs from "fs-extra"; 
 import { fileURLToPath } from "url";
 import { join, dirname } from "path";
 import { createReadStream } from "fs";
@@ -23,4 +23,4 @@ export const saveMediaPoster = (filename, contentAsABuffer) =>
 
 console.log(mediaPublicFolderPath);
 
-// export const getAuthorsReadableStream = () => createReadStream(authorsJSONPath);
+
