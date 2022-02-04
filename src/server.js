@@ -11,13 +11,13 @@ import {
 
 import cors from "cors";
 
-import { join } from "path";
+
 
 const server = express();
 
 const port = process.env.PORT || 3001;
 
-const publicFolderPath = join(process.cwd(), "./public");
+
 
 //cors
 const whiteListedOrigins = [process.env.FE_DEV_URL, process.env.FE_PROD_URL]; 
@@ -38,7 +38,7 @@ server.use(
 );
 
 //
-server.use(express.static(publicFolderPath));
+
 server.use(express.json());
 
 //ENDPOINTS
