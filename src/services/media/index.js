@@ -5,13 +5,11 @@ import createHttpError from "http-errors";
 import { validationResult } from "express-validator";
 import { newMediaValidation, newReviewValidation } from "./validation.js";
 import multer from "multer";
-import { saveMediaPoster } from "../../lib/fs-tools.js";
+
 import { getMedia, writeMedia } from "../../lib/fs-tools.js";
 import { v2 as cloudinary } from "cloudinary";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
-// import { getPDFReadableStream } from "../../lib/pdf-tools.js";
-// import { pipeline } from "stream";
-// import { sendNewBlog } from "../../lib/email-tools.js";
+
 
 const mediaRouter = express.Router();
 
@@ -35,9 +33,7 @@ mediaRouter.post("/", newMediaValidation, async (req, res, next) => {
       
       await writeMedia(mediaArray);
 
-      //send blogupload email
-    //   const newMedia = req.body;
-    //   await sendNewMedia(newMedia);
+     
 
       res.status(201).send({ imdbID: newMedia.imdbID });
     } else {
@@ -68,7 +64,7 @@ mediaRouter.get("/", async (req, res, next) => {
     res.send(OMDbMedia);
     }
   } catch (error) {
-    next(error); // With the next function I can send the error to the error handler middleware
+    next(error); 
   }
 });
 
@@ -148,10 +144,9 @@ mediaRouter.post(
     storage: new CloudinaryStorage({ cloudinary, params: { folder: "netflix" } }),
   }).single("Poster"),
   async (req, res, next) => {
-    // "Poster" does need to match exactly to the name used in FormData field in the frontend, otherwise Multer is not going to be able to find the file in the req.body
+    
     try {
-      // console.log("FILE: ", req.file);
-      // await saveMediaPoster(req.file.originalname, req.file.buffer);
+      
       const mediaimdbID = req.params.mediaimdbID;
 
       const mediaArray = await getMedia();
@@ -279,29 +274,6 @@ mediaRouter.get("/:mediaimdbID/pdf", async (req,res,next) => {
     }
 });
 
-// blogPostsRouter.get("/:blogPostId/downloadPDF", async (req, res, next) => {
-//   try {
-//     const blogPostId = req.params.blogPostId;
 
-//     const blogPostsArray = await getBlogPosts();
-
-//     const foundBlogPost = blogPostsArray.find(
-//       (blogPost) => blogPost._id === blogPostId
-//     );
-//     console.log(foundBlogPost);
-//     res.setHeader(
-//       "Content-Disposition",
-//       `attachment; filename=${foundBlogPost.title}.pdf`
-//     );
-
-//     const source = getPDFReadableStream(foundBlogPost);
-//     const destination = res;
-//     pipeline(source, destination, (err) => {
-//       if (err) next(err);
-//     });
-//   } catch (error) {
-//     next(error);
-//   }
-// });
 
 export default mediaRouter;
