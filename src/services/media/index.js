@@ -22,6 +22,7 @@ mediaRouter.post("/", newMediaValidation, async (req, res, next) => {
         ...req.body,
         createdAt: new Date(),
         imdbID: uniqid(),
+        reviews: []
       };
 
       
