@@ -2,6 +2,13 @@ import PdfPrinter from "pdfmake";
 import axios from "axios";
 import getStream from "get-stream";
 export const getPDFReadableStream = async (foundMedia, asBuffer = false) => {
+  
+  const reviewsPart = foundMedia.reviews.map(review=>({
+    text:review.text,
+    fontSize:16,
+    bold:true
+  }))
+  
   const fonts = {
     Helvetica: {
       normal: "Helvetica",
@@ -40,7 +47,7 @@ export const getPDFReadableStream = async (foundMedia, asBuffer = false) => {
       "\n",
       foundMedia.Type,
       "\n",
-      foundMedia.reviews,
+      ...reviewsPart
     ],
     styles: {
       header: {

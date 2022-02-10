@@ -56,13 +56,19 @@ mediaRouter.get("/", async (req, res, next) => {
         const filteredMedia = mediaArray.filter(
             (media) => media.Title === req.query.Title
         )
-        res.send(filteredMedia)
+        if(filteredMedia.lenght>0){
+          res.send(filteredMedia)
+        }
     } else { 
-        axios.get(`http://www.omdbapi.com/?s=${req.query.Title}&apikey=bf46dbfc`).then(OMDbMedia => res.data.Search).catch(err=> console.log(err))
-        mediaArray.push(OMDbMedia);
+      const {data} = axios.get(`http://www.omdbapi.com/?s=${req.query.Title}&apikey=bf46dbfc`)
+      if(data){
+        mediaArray.push(data);
         await writeMedia(mediaArray)
-
-    res.send(OMDbMedia);
+        res.send(data)
+      }
+      else {
+        res.send([])
+      }
     }
   } catch (error) {
     next(error); 
